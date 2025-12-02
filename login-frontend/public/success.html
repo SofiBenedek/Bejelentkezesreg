@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="hu">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Sikeres bejelentkezés</title>
+  </head>
+  <body style="font-family: Arial, padding: 40px;">
+    <h1 id="msg"></h1>
+
+    <script>
+      // URL-ből kivesszük az email paramétert
+      const params = new URLSearchParams(window.location.search);
+      const email = params.get("email");
+
+      // Kiírjuk az üzenetet
+      document.getElementById("msg").textContent =
+        "✅ Sikeres bejelentkezés (" + (email || "ismeretlen") + ")";
+    </script>
+  </body>
+</html>
