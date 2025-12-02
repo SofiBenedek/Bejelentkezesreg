@@ -9,6 +9,7 @@
       >
         Bejelentkezés
       </button>
+
       <button
         :class="{ active: mode === 'register' }"
         @click="switchMode('register')"
@@ -87,16 +88,19 @@ const onSubmit = async () => {
       return;
     }
 
-    // Ha LOGIN módban vagyunk: ÁTIRÁNYÍTÁS MÁS OLDALRA
+    // 🔥 BEJELENTKEZÉS → átirányítás külön oldalra
     if (mode.value === "login") {
-      // /public mappából fogjuk kiszolgálni a success.html-t
       window.location.href =
         "/success.html?email=" + encodeURIComponent(data.user.email);
       return;
     }
 
-    // Ha REGISZTRÁCIÓ módban vagyunk: maradunk itt, csak kiírjuk az üzenetet
-    message.value = `✅ ${data.message} (${data.user.email})`;
+    // 🔥 REGISZTRÁCIÓ → váltson át a login nézetre és ott írja ki az üzenetet
+    if (mode.value === "register") {
+      switchMode("login");
+      message.value = `✅ ${data.message} (${data.user.email})`;
+      return;
+    }
   } catch (err) {
     message.value = "Hálózati hiba (nem fut a backend?)";
   }
